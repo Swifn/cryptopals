@@ -17,11 +17,10 @@ pub fn hex_to_bytes(s: &str) -> Vec<u8> {
     bytes
 }
 
-pub fn bytes_to_base64(v: Vec<u8>) -> String {
+pub fn bytes_to_base64(bytes: &[u8]) -> String {
     const BASE64_TABLE: &[u8; 64] =
         b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 
-    let bytes: Vec<u8> = v;
     let mut out: String = String::new();
 
     let mut i = 0;
