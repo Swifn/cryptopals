@@ -15,7 +15,7 @@ mod tests {
 
     #[test]
     fn challenge_correct() {
-        let result = run();
+        let result: String = run();
         assert_eq!(
             result,
             "SSdtIGtpbGxpbmcgeW91ciBicmFpbiBsaWtlIGEgcG9pc29ub3VzIG11c2hyb29t"
