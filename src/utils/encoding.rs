@@ -1,5 +1,18 @@
-pub fn bytes_to_hex(s: &str) -> Vec<u8> {
-    unimplemented!()
+pub fn bytes_to_hex(bytes: &[u8]) -> String {
+    const HEX_TABLE: &[u8; 16] = b"0123456789abcdef";
+    let mut out: String = String::new();
+
+    for i in 0..bytes.len(){
+        let tmp = bytes[i];
+
+        let first = (tmp >> 4 & 0b1111) as usize;
+        let second = (tmp & 0b1111) as usize;
+
+        out.push(HEX_TABLE[first] as char);
+        out.push(HEX_TABLE[second] as char);
+    }
+
+    out
 }
 
 pub fn hex_to_bytes(s: &str) -> Vec<u8> {
@@ -53,8 +66,6 @@ pub fn bytes_to_base64(bytes: &[u8]) -> String {
 
         i += 3
     }
-
-    println!("{}", out);
 
     out
 }
