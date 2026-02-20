@@ -2,14 +2,11 @@ pub fn bytes_to_hex(bytes: &[u8]) -> String {
     const HEX_TABLE: &[u8; 16] = b"0123456789abcdef";
     let mut out: String = String::new();
 
-    for i in 0..bytes.len() {
-        let tmp = bytes[i];
-
-        let first = (tmp >> 4 & 0b1111) as usize;
-        let second = (tmp & 0b1111) as usize;
-
-        out.push(HEX_TABLE[first] as char);
-        out.push(HEX_TABLE[second] as char);
+    for byte in bytes {
+        let hi = (byte >> 4) as usize;
+        let lo = (byte & 0b1111) as usize;
+        out.push(HEX_TABLE[hi] as char);
+        out.push(HEX_TABLE[lo] as char);
     }
 
     out
