@@ -11,24 +11,18 @@ pub fn fixed_xor(bytes: &[u8], key: &[u8]) -> Vec<u8> {
 }
 
 pub fn single_byte_xor_cipher(bytes: &[u8]) -> Score {
-    let mut best: Option<Score> = None;
-
-    for key in 0u8..=255u8 {
-        let xor: Vec<u8> = bytes.iter().map(|&b| b ^ key).collect();
-
-        if let Ok(text) = String::from_utf8(xor) {
+    (0u8..=255)
+        .map(|key: u8| {
+            let xor: Vec<u8> = bytes.iter().map(|b: &u8| b ^ key).collect();
+            let text: String = String::from_utf8_lossy(&xor).to_string();
             let sc: i32 = scoring(&text);
-            let candidate = Score {
+
+            Score {
                 text,
                 key,
                 score: sc,
-            };
-
-            if best.as_ref().map_or(true, |b| candidate.score > b.score) {
-                best = Some(candidate)
             }
-        }
-    }
-
-    best.unwrap()
+        })
+        .max_by_key(|s: &Score| s.score)
+        .unwrap()
 }
