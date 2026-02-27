@@ -24,7 +24,7 @@ pub fn run() -> String {
         result.key, result.key as char, result.score, result.text
     );
 
-    result.text
+    result.text.replace('\n', "")
 }
 
 #[cfg(test)]
