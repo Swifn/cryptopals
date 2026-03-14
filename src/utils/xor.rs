@@ -26,3 +26,9 @@ pub fn single_byte_xor_cipher(bytes: &[u8]) -> Score {
         .max_by_key(|s: &Score| s.score)
         .unwrap()
 }
+
+pub fn repeating_key_xor(bytes: &[u8], key: &[u8]) -> Vec<u8> {
+    (0..bytes.len())
+        .map(|i| bytes[i] ^ key[i % key.len()])
+        .collect()
+}
