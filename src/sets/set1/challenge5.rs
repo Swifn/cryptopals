@@ -5,7 +5,7 @@ pub fn run() -> String {
     let s: &str = "Burning 'em, if you ain't quick and nimble
 I go crazy when I hear a cymbal";
 
-    let hex = bytes_to_hex(&repeating_key_xor(s.as_bytes(), b"ICE"));
+    let hex: String = bytes_to_hex(&repeating_key_xor(s.as_bytes(), b"ICE"));
 
     hex
 }
