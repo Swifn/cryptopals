@@ -13,6 +13,8 @@ pub fn get_challenges() -> HashMap<(&'static str, &'static str), ChallengeFn> {
     map.insert(("set1", "4"), set1::challenge4::run);
     map.insert(("set1", "5"), set1::challenge5::run);
     map.insert(("set1", "6"), set1::challenge6::run);
+    map.insert(("set1", "7"), set1::challenge7::run);
+    map.insert(("set1", "8"), set1::challenge8::run);
 
     map
 }
