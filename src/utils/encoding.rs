@@ -41,10 +41,10 @@ pub fn bytes_to_base64(bytes: &[u8]) -> String {
 
         let triple: u32 = ((b1 as u32) << 16) | ((b2 as u32) << 8) | (b3 as u32);
 
-        let c1 = ((triple >> 18) & 0b111111) as usize;
-        let c2 = ((triple >> 12) & 0b111111) as usize;
-        let c3 = ((triple >> 6) & 0b111111) as usize;
-        let c4 = (triple & 0b111111) as usize;
+        let c1: usize = ((triple >> 18) & 0b111111) as usize;
+        let c2: usize = ((triple >> 12) & 0b111111) as usize;
+        let c3: usize = ((triple >> 6) & 0b111111) as usize;
+        let c4: usize = (triple & 0b111111) as usize;
 
         out.push(BASE64_TABLE[c1] as char);
         out.push(BASE64_TABLE[c2] as char);
@@ -65,4 +65,38 @@ pub fn bytes_to_base64(bytes: &[u8]) -> String {
     }
 
     out
+}
+
+pub fn base64_to_bytes(base64: String) -> Vec<u8> {
+    const BASE64_TABLE: &[u8; 64] =
+        b"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    let chars: Vec<char> = base64
+        .chars()
+        .filter(|&c| c != '=' && c != '\n' && c != '\r')
+        .collect();
+
+    let nums: Vec<u8> = (0..chars.len())
+        .map(|i: usize| {
+            BASE64_TABLE
+                .iter()
+                .position(|&b| b == (chars[i] as u8))
+                .unwrap() as u8
+        })
+        .collect();
+
+    let mut bytes: Vec<u8> = Vec::new();
+    for chunk in nums.chunks(4) {
+        if chunk.len() >= 2 {
+            bytes.push(chunk[0] << 2 | chunk[1] >> 4)
+        }
+        if chunk.len() >= 3 {
+            bytes.push(chunk[1] << 4 | chunk[2] >> 2)
+        }
+        if chunk.len() >= 4 {
+            bytes.push(chunk[2] << 6 | chunk[3])
+        }
+    }
+
+    bytes
 }
