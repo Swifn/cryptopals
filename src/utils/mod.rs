@@ -1,3 +1,4 @@
+pub mod block_manipulation;
 pub mod encoding;
 pub mod hamming_distance;
 pub mod scoring;
