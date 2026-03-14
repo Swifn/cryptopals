@@ -1,3 +1,4 @@
+pub mod aes;
 pub mod block_manipulation;
 pub mod encoding;
 pub mod hamming_distance;
