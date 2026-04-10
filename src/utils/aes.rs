@@ -14,3 +14,17 @@ pub fn decrypt_aes_128_ecb(bytes: &[u8], key: &[u8]) -> Vec<u8> {
         })
         .collect()
 }
+
+pub fn detect_aes_128_ecb(bytes: &[u8]) -> bool {
+    let chunks: Vec<&[u8]> = bytes.chunks(16).collect();
+
+    for i in 0..chunks.len() {
+        for j in (i + 1)..chunks.len() {
+            if chunks[i] == chunks[j] {
+                return true;
+            }
+        }
+    }
+
+    false
+}
