@@ -14,7 +14,7 @@ pub fn bytes_to_hex(bytes: &[u8]) -> String {
 
 pub fn hex_to_bytes(s: &str) -> Vec<u8> {
     let mut bytes: Vec<u8> = Vec::new();
-    let chars: Vec<char> = s.chars().collect();
+    let chars: Vec<char> = s.chars().filter(|&c| c != '\r' && c != '\n').collect();
 
     for i in (0..chars.len()).step_by(2) {
         let hi: u32 = chars[i].to_digit(16).unwrap();
